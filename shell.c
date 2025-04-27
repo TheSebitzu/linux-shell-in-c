@@ -47,7 +47,18 @@ void loop(void)
     // Main loop
     do
     {
-        printf("> ");
+        // Get present working directory
+        char pwd[1024];
+        if (getcwd(pwd, sizeof(pwd)) != NULL)
+        {
+            // Print baby blue pwd
+            printf("\033[38;2;137;207;240m%s\033[0m$ ", pwd);
+        }        
+        else
+        {
+            perror("shell getcwd");
+            printf("$ ");
+        }
         line = read_line();
         args = split_line(line);
         status = execute(args);
